@@ -1,0 +1,56 @@
+<div id="sidebar">
+  <div id="row1">
+    <div id="sidebarHeader">
+      <div class="avatarContainer cursor-ptr">
+        <img src="../../assets/images/noPic.svg" />
+      </div>
+      <div class="actionsContainer">
+        <img class="cursor-ptr" (click)="getStatusList()" src="../../assets/images/statusIcon.svg" />
+        <img class="cursor-ptr" (click)="getMessageList()" src="../../assets/images/chatIcon.svg" />
+        <div class="dropdown">
+          <img class="menu-dots cursor-ptr" src="../../assets/images/moreVertIcon.svg" />
+          <div class="dropdown-content" style="z-index: 9999999999;">
+            <a class="cursor-ptr" (click)="onClickMenu('account')">Account</a>
+            <a class="cursor-ptr" (click)="onClickMenu('about')">About</a>
+            <a class="cursor-ptr" (click)="onClickMenu('logout')">Log Out</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="searchBox">
+      <img width="19" src="../../assets/images/searchIcon.svg" />
+      <input type="text" placeholder="Search or start the new chat" />
+    </div>
+  </div>
+  <div id="sidebarContent">
+    <!-- <div id="noConversations">All chats are archived</div> -->
+    <div *ngIf="conversations.length>0">
+      <div class="conversation" *ngFor="
+          let conversation of !searchText ? conversations : filteredConversations
+        " (click)="conversationClicked.emit(conversation)">
+        <div class="picture">
+          <img *ngIf="!conversation.dmedia" src="../../assets/images/noPic.svg" />
+          <img *ngIf="conversation.dmedia" [src]="conversation?.dmedia" />
+        </div>
+        <div class="content">
+          <div class="conversationHeader">
+            <div class="name">{{ conversation.name }}</div>
+            <div class="time">{{ conversation.time }}</div>
+          </div>
+          <div class="message wrp-txt">
+            <img *ngIf="!conversation.latestMessageRead" src="../../assets/images/doubleTick.svg" />
+            <img *ngIf="conversation.latestMessageRead" src="../../assets/images/doubleTickBlue.svg" />
+            {{ conversation.latestMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="loader" class="loader-shadow">
+    <div class="qr_loader">
+      <sa-spinner-circular [enabled]="loader" [thickness]="150" [size]="80"></sa-spinner-circular>
+      <p>loading..</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div id="background_header"></div>
+<div id="background_body"></div>
+
+<div id="chatContainer">
+  <div *ngIf="connected">
+    <app-home></app-home>
+  </div>
+  <div *ngIf="!connected" class="d-flex" style="display: flex; width: 100%; padding: 30px;">
+    <div style="width: 70%;">
+      <p style="font-size: 20px; font-weight: 700; color: #0f0a0a;">To use WhatsApp on your computer:</p>
+      <p style="font-size: 20px; font-weight: 500; color: #6a6a6ae8;">1. Open WhatsApp on your phone</p>
+      <p style="font-size: 20px; font-weight: 500; color: #6a6a6ae8;">2. Tap Menu: or Settings and select Linked device
+      </p>
+      <p style="font-size: 20px; font-weight: 500; color: #6a6a6ae8;">3. Tap on Link a Device </p>
+      <p style="font-size: 20px; font-weight: 500; color: #6a6a6ae8;">3. Point your phone to this screen to capture the
+        code
+      </p>  
+
+    </div>
+    <div style="width: 30%;text-align: center;">
+      <img *ngIf="!qrCode" [src]="defaultImage" alt="Qr_code">
+      <qrcode [qrdata]="qrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
+  </div>
+  <!-- <button class="btn" (click)="setQr()">Genrate QR code</button> -->
+
+  <div *ngIf="loader" class="loader-shadow">
+    <div class="qr_loader">
+      <sa-spinner-circular [enabled]="loader" [thickness]="150" [size]="80"></sa-spinner-circular>
+      <p>loading..</p>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
